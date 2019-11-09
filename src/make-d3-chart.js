@@ -1,15 +1,17 @@
 import * as d3 from 'd3';
 
 export default function makeD3Chart(data) {
-  const width = 5000;
-  const height = 500;
+  const width = 4000;
+  const height = 2000;
   const margin = { top: 30, right: 50, bottom: 30, left: 30 };
   const series = [];
   const classPackages = [];
   const amountPaids = [];
+  const packagesPurchaseds = [];
 
   let classesPurchasedItem;
   let amountPaidItem;
+  let packagesPurchasedItem;
 
   // dedupe for the series
   data.forEach((currentItem) => {
@@ -37,10 +39,23 @@ export default function makeD3Chart(data) {
       amountPaidItem.date = currentItem.date;
       amountPaidItem.value = currentItem.amountPaid;
     }
+
+    if (packagesPurchasedItem && packagesPurchasedItem.date && packagesPurchasedItem.date.getTime() === currentItem.date.getTime()) {
+      packagesPurchasedItem.value = packagesPurchasedItem.value + 1;
+    } else {
+
+      if (packagesPurchasedItem) packagesPurchaseds.push(packagesPurchasedItem);
+
+      packagesPurchasedItem = {};
+      packagesPurchasedItem.key = 'Packages Purchased';
+      packagesPurchasedItem.date = currentItem.date;
+      packagesPurchasedItem.value = 1;
+    }
   });
 
   series[0] = classPackages;
   series[1] = amountPaids;
+  series[2] = packagesPurchaseds;
   console.log('series', series);
 
   const x = d3.scaleUtc()
@@ -51,7 +66,7 @@ export default function makeD3Chart(data) {
     .domain([0, d3.max(series, s => d3.max(s, d => d.value))])
     .range([height - margin.bottom, margin.top])
 
-  const z = d3.scaleOrdinal(['classPackage', 'amountPaid'], d3.schemeCategory10);
+  const z = d3.scaleOrdinal(['classPackage', 'amountPaid', ''], d3.schemeCategory10);
 
   const xAxis = g => g
     .attr('transform', `translate(0,${height - margin.bottom})`)
