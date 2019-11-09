@@ -1,31 +1,47 @@
 import * as d3 from 'd3';
 
 export default function makeD3Chart(data) {
-  const width = 1000;
+  const width = 5000;
   const height = 500;
   const margin = { top: 30, right: 50, bottom: 30, left: 30 };
   const series = [];
   const classPackages = [];
   const amountPaids = [];
 
-  data.forEach(d => {
-    const classPackageItem = {
-      key: 'Classes Purchased',
-      value: d['classPackage'],
-      date: d['date']
-    };
-    const amountPaidItem = {
-      key: 'Revenue',
-      value: d['amountPaid'],
-      date: d['date']
-    };
+  let classesPurchasedItem;
+  let amountPaidItem;
 
-    classPackages.push(classPackageItem);
-    amountPaids.push(amountPaidItem);
+  // dedupe for the series
+  data.forEach((currentItem) => {
+
+    if (classesPurchasedItem && classesPurchasedItem.date && classesPurchasedItem.date.getTime() === currentItem.date.getTime()) {
+      classesPurchasedItem.value = classesPurchasedItem.value + currentItem.classPackage;
+    } else {
+
+      if (classesPurchasedItem) classPackages.push(classesPurchasedItem);
+
+      classesPurchasedItem = {};
+      classesPurchasedItem.key = 'Classes Purchased';
+      classesPurchasedItem.date = currentItem.date;
+      classesPurchasedItem.value = currentItem.classPackage;
+    }
+
+    if (amountPaidItem && amountPaidItem.date && amountPaidItem.date.getTime() === currentItem.date.getTime()) {
+      amountPaidItem.value = amountPaidItem.value + currentItem.amountPaid;
+    } else {
+
+      if (amountPaidItem) amountPaids.push(amountPaidItem);
+
+      amountPaidItem = {};
+      amountPaidItem.key = 'Revenue';
+      amountPaidItem.date = currentItem.date;
+      amountPaidItem.value = currentItem.amountPaid;
+    }
   });
 
   series[0] = classPackages;
   series[1] = amountPaids;
+  console.log('series', series);
 
   const x = d3.scaleUtc()
     .domain([data[0].date, data[data.length - 1].date])
