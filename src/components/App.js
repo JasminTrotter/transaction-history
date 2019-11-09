@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Chart from './Chart';
-import logo from '../logo.svg';
 import '../styles/App.css';
 
 function App() {

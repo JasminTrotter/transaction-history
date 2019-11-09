@@ -10,12 +10,12 @@ export default function makeD3Chart(data) {
 
   data.forEach(d => {
     const classPackageItem = {
-      key: 'classPackage',
+      key: 'Classes Purchased',
       value: d['classPackage'],
       date: d['date']
     };
     const amountPaidItem = {
-      key: 'amountPaid',
+      key: 'Revenue',
       value: d['amountPaid'],
       date: d['date']
     };
@@ -41,7 +41,7 @@ export default function makeD3Chart(data) {
     .attr('transform', `translate(0,${height - margin.bottom})`)
     .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
 
-  const svg = d3.create('svg')
+  const svg = d3.select('#svg-chart')
     .attr('viewBox', [0, 0, width, height]);
 
   svg.append('g')

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import * as d3 from 'd3';
 import '../styles/App.css';
 import makeD3Chart from '../make-d3-chart';
 
@@ -20,7 +19,7 @@ function Chart({ dataSet }) {
 
   return (
     <div className='Chart'>
-
+      <svg id='svg-chart'></svg>
     </div>
   );
 }
