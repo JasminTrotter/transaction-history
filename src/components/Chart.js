@@ -8,10 +8,8 @@ function Chart({ dataSet }) {
   if (dataSet) {
     dataSet.map(o => {
       o['classPackage'] = parseInt(o['package'].replace(/[classes ]/g, ''));
-
       o['amountPaid'] = parseInt(o['amountPaid']);
-
-      o['date'] = new Date(o['purchaseDate'].replace(/[thsn]/g, ''));
+      o['date'] = new Date(o['purchaseDate'].replace(/(th)|(st)|(nd)|(rd)/g, ''));
     });
 
     makeD3Chart(dataSet);

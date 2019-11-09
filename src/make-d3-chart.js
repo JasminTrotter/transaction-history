@@ -1,47 +1,41 @@
 import * as d3 from 'd3';
 
 export default function makeD3Chart(data) {
-  // var node = document.createElement('div');
   const width = 1000;
   const height = 500;
   const margin = { top: 30, right: 50, bottom: 30, left: 30 };
-  const series = dataSet => {
-    const arr = [];
-    const arr0 = []
-    const arr1 = []
+  const series = [];
+  const classPackages = [];
+  const amountPaids = [];
 
-    dataSet.forEach(d => {
-      const o1 = {
-        key: 'classPackage',
-        value: d['classPackage'],
-        date: d['date']
-      };
-      const o2 = {
-        key: 'amountPaid',
-        value: d['amountPaid'],
-        date: d['date']
-      };
+  data.forEach(d => {
+    const classPackageItem = {
+      key: 'classPackage',
+      value: d['classPackage'],
+      date: d['date']
+    };
+    const amountPaidItem = {
+      key: 'amountPaid',
+      value: d['amountPaid'],
+      date: d['date']
+    };
 
-      arr0.push(o1);
-      arr1.push(o2);
-    })
+    classPackages.push(classPackageItem);
+    amountPaids.push(amountPaidItem);
+  });
 
-    arr[0] = arr0
-    arr[1] = arr1
-
-    console.log('arr', arr);
-    return arr;
-  }
+  series[0] = classPackages;
+  series[1] = amountPaids;
 
   const x = d3.scaleUtc()
     .domain([data[0].date, data[data.length - 1].date])
     .range([margin.left, width - margin.right]);
 
   const y = d3.scaleLinear()
-    .domain([0, d3.max(series, s => d3.max(s, d => d.classPackage))])
-    .range([height - margin.bottom, margin.top]);
+    .domain([0, d3.max(series, s => d3.max(s, d => d.value))])
+    .range([height - margin.bottom, margin.top])
 
-  const z = d3.scaleOrdinal(data.columns.slice(1), d3.schemeCategory10);
+  const z = d3.scaleOrdinal(['classPackage', 'amountPaid'], d3.schemeCategory10);
 
   const xAxis = g => g
     .attr('transform', `translate(0,${height - margin.bottom})`)
@@ -55,7 +49,7 @@ export default function makeD3Chart(data) {
 
   const serie = svg.append('g')
     .selectAll('g')
-    .data(series(data))
+    .data(series)
     .join('g');
 
   serie.append('path')
@@ -64,7 +58,7 @@ export default function makeD3Chart(data) {
     .attr('stroke-width', 1.5)
     .attr('d', d3.line()
       .x(d => x(d.date))
-      .y(d => y(d.classPackage)));
+      .y(d => y(d.value)));
 
   serie.append('g')
     .attr('font-family', 'sans-serif')
@@ -75,10 +69,10 @@ export default function makeD3Chart(data) {
     .selectAll('text')
     .data(d => d)
     .join('text')
-    .text(d => d.classPackage)
+    .text(d => d.value)
     .attr('dy', '0.35em')
     .attr('x', d => x(d.date))
-    .attr('y', d => y(d.classPackage))
+    .attr('y', d => y(d.value))
     .call(text => text.filter((d, i, data) => i === data.length - 1)
       .append('tspan')
       .attr('font-weight', 'bold')
