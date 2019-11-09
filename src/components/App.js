@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Chart from './Chart';
 import logo from '../logo.svg';
 import '../styles/App.css';
@@ -7,7 +7,7 @@ function App() {
   const [dataSet, updateDataSet] = useState(null);
 
   useEffect(() => {
-    const url = 'https://student-portal-api.herokuapp.com/api/transaction-history'
+    const url = 'https://student-portal-api.herokuapp.com/api/transaction-history';
 
     fetch(url)
       .then(res => res.json())
@@ -15,11 +15,11 @@ function App() {
         console.log('raw data', data);
         updateDataSet(data);
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   }, []);
 
   return (
-    <div className="App">
+    <div className='App'>
       <Chart dataSet={dataSet} />
     </div>
   );
