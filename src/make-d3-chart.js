@@ -66,7 +66,7 @@ export default function makeD3Chart(data) {
     .domain([0, d3.max(series, s => d3.max(s, d => d.value))])
     .range([height - margin.bottom, margin.top])
 
-  const z = d3.scaleOrdinal(['classPackage', 'amountPaid', ''], d3.schemeCategory10);
+  const z = d3.scaleOrdinal(['classPackage', 'amountPaid'], d3.schemeCategory10);
 
   const xAxis = g => g
     .attr('transform', `translate(0,${height - margin.bottom})`)
