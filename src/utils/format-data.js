@@ -1,5 +1,5 @@
 export default function formatData(dataSet) {
-  dataSet.map(o => {
+  dataSet.forEach(o => {
     o['classPackage'] = parseInt(o['package'].replace(/[classes ]/g, ''));
     o['amountPaid'] = parseInt(o['amountPaid']);
     o['date'] = new Date(o['purchaseDate'].replace(/(st)|(nd)|(rd)|(th)/g, ''));
