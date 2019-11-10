@@ -5,14 +5,13 @@ import formatData from '../utils/format-data';
 import '../styles/App.css';
 
 function App() {
-  const [wholeDataSet, updateWholeDataSet] = useState(null);
   const [selectedData, updateSelectedData] = useState(null);
 
   const threeMonthsAgo = moment().subtract(3, 'months');
   const today = moment();
 
-  const [beginTime] = useState(threeMonthsAgo);
-  const [endTime] = useState(today);
+  const [beginTime, updateBeginTime] = useState(threeMonthsAgo);
+  const [endTime, updateEndTime] = useState(today);
 
   useEffect(() => {
     const url = 'https://student-portal-api.herokuapp.com/api/transaction-history';
@@ -26,10 +25,9 @@ function App() {
 
     function handleRawData(dataSet) {
       formatData(dataSet);
-      updateWholeDataSet(dataSet);
       filterData(dataSet, beginTime, endTime);
     }
-  }, []);
+  }, [beginTime, endTime, selectedData]);
 
 
   function filterData(dataSet, begin, end) {
@@ -38,10 +36,20 @@ function App() {
     updateSelectedData(filtered);
   }
 
+  function handleLastThree() {
+    updateBeginTime(beginTime.subtract(3, 'months'));
+    updateEndTime(endTime.subtract(3, 'months'));
+  }
+
+  function handleNextThree() {
+    updateBeginTime(beginTime.add(3, 'months'));
+    updateEndTime(endTime.add(3, 'months'));
+  }
+
   return (
     <div className='App'>
-      <button onClick={() => filterData(wholeDataSet, beginTime.subtract(3, 'months'), endTime.subtract(3, 'months'))}>last 3 months</button>
-      <button onClick={() => filterData(wholeDataSet, beginTime.add(3, 'months'), endTime.add(3, 'months'))}>next 3 months</button>
+      <button onClick={() => handleLastThree()}>last 3 months</button>
+      <button onClick={() => handleNextThree()}>next 3 months</button>
 
       <Chart
         dataSet={selectedData}
