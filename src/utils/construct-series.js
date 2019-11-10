@@ -1,7 +1,7 @@
 
 export const series = [];
 
-export function dedupeDates(data) {
+export function constructSeries(data) {
   let classesPurchasedItem;
   let amountPaidItem;
   let packagesPurchasedItem;

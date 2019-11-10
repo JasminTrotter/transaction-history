@@ -1,12 +1,12 @@
 import * as d3 from 'd3';
-import { dedupeDates, series } from './utils/dedupe-dates';
+import { constructSeries, series } from './utils/construct-series';
 
 export default function makeD3Chart(data, earliestTime, latestTime) {
   const width = 2000;
   const height = 1000;
   const margin = { top: 30, right: 50, bottom: 30, left: 30 };
 
-  dedupeDates(data);
+  constructSeries(data);
 
   const x = d3.scaleTime()
     .range([margin.left, width - margin.right])
