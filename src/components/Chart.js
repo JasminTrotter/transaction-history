@@ -5,30 +5,25 @@ import makeD3Chart from '../make-d3-chart';
 
 function Chart({
   dataSet,
-  earliest,
-  latest
+  begin,
+  end
 }) {
 
-  console.log('chart earliest', earliest._d)
-  console.log('chart latest', latest._d)
-
   useEffect(() => {
-    console.log('chart data', dataSet)
     if (dataSet && dataSet.length) {
       d3.select('#svg-chart')
         .selectAll('g')
         .remove();
 
-      makeD3Chart(dataSet, earliest._d, latest._d);
+      makeD3Chart(dataSet, begin._d, end._d);
     }
 
   });
 
-
   return (
-    <div className='Chart'>
+    <>
       <svg id='svg-chart'></svg>
-    </div>
+    </>
   );
 }
 
