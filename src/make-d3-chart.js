@@ -1,8 +1,10 @@
 import * as d3 from 'd3';
 
-export default function makeD3Chart(data) {
-  const width = 4000;
-  const height = 2000;
+export default function makeD3Chart(data, earliestTime, latestTime) {
+  console.log('times earliest', earliestTime)
+  console.log('times latest', latestTime)
+  const width = 2000;
+  const height = 1000;
   const margin = { top: 30, right: 50, bottom: 30, left: 30 };
   const series = [];
   const classPackages = [];
@@ -19,38 +21,35 @@ export default function makeD3Chart(data) {
     if (classesPurchasedItem && classesPurchasedItem.date && classesPurchasedItem.date.getTime() === currentItem.date.getTime()) {
       classesPurchasedItem.value = classesPurchasedItem.value + currentItem.classPackage;
     } else {
-
-      if (classesPurchasedItem) classPackages.push(classesPurchasedItem);
-
       classesPurchasedItem = {};
       classesPurchasedItem.key = 'Classes Purchased';
       classesPurchasedItem.date = currentItem.date;
       classesPurchasedItem.value = currentItem.classPackage;
     }
 
+    if (classesPurchasedItem) classPackages.push(classesPurchasedItem);
+
     if (amountPaidItem && amountPaidItem.date && amountPaidItem.date.getTime() === currentItem.date.getTime()) {
       amountPaidItem.value = amountPaidItem.value + currentItem.amountPaid;
     } else {
-
-      if (amountPaidItem) amountPaids.push(amountPaidItem);
-
       amountPaidItem = {};
       amountPaidItem.key = 'Revenue';
       amountPaidItem.date = currentItem.date;
       amountPaidItem.value = currentItem.amountPaid;
     }
 
+    if (amountPaidItem) amountPaids.push(amountPaidItem);
+
     if (packagesPurchasedItem && packagesPurchasedItem.date && packagesPurchasedItem.date.getTime() === currentItem.date.getTime()) {
       packagesPurchasedItem.value = packagesPurchasedItem.value + 1;
     } else {
-
-      if (packagesPurchasedItem) packagesPurchaseds.push(packagesPurchasedItem);
-
       packagesPurchasedItem = {};
       packagesPurchasedItem.key = 'Packages Purchased';
       packagesPurchasedItem.date = currentItem.date;
       packagesPurchasedItem.value = 1;
     }
+
+    if (packagesPurchasedItem) packagesPurchaseds.push(packagesPurchasedItem);
   });
 
   series[0] = classPackages;
@@ -58,13 +57,14 @@ export default function makeD3Chart(data) {
   series[2] = packagesPurchaseds;
   console.log('series', series);
 
-  const x = d3.scaleUtc()
-    .domain([data[0].date, data[data.length - 1].date])
-    .range([margin.left, width - margin.right]);
+  const x = d3.scaleTime()
+    .range([margin.left, width - margin.right])
+    .domain([earliestTime, latestTime])
+    .nice()
 
   const y = d3.scaleLinear()
     .domain([0, d3.max(series, s => d3.max(s, d => d.value))])
-    .range([height - margin.bottom, margin.top])
+    .range([height - margin.bottom, margin.top]);
 
   const z = d3.scaleOrdinal(['classPackage', 'amountPaid'], d3.schemeCategory10);
 
