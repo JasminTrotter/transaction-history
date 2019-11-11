@@ -8,9 +8,9 @@ import '../styles/App.css';
 function App() {
   const [selectedData, updateSelectedData] = useState(null);
   const [rawData, setRawData] = useState(null);
-  const threeMonthsAgo = moment().subtract(3, 'months');
+  const oneMonthAgo = moment().subtract(1, 'months');
   const today = moment();
-  const [beginTime, updateBeginTime] = useState(threeMonthsAgo);
+  const [beginTime, updateBeginTime] = useState(oneMonthAgo);
   const [endTime, updateEndTime] = useState(today);
   const [filter, setFilter] = useState(false);
   const [showLast, setShowLast] = useState(true);
@@ -64,14 +64,14 @@ function App() {
   }
 
   function handleLastThree() {
-    updateBeginTime(beginTime.subtract(3, 'months'));
-    updateEndTime(endTime.subtract(3, 'months'));
+    updateBeginTime(beginTime.subtract(1, 'months'));
+    updateEndTime(endTime.subtract(1, 'months'));
     setFilter(true);
   }
 
   function handleNextThree() {
-    updateBeginTime(beginTime.add(3, 'months'));
-    updateEndTime(endTime.add(3, 'months'));
+    updateBeginTime(beginTime.add(1, 'months'));
+    updateEndTime(endTime.add(1, 'months'));
     setFilter(true);
   }
 
@@ -90,6 +90,7 @@ function App() {
 
       <Chart
         dataSet={selectedData}
+        rawData={rawData}
         begin={beginTime}
         end={endTime}
       />

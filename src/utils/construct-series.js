@@ -23,12 +23,12 @@ export function constructSeries(data) {
     if (classesPurchasedItem) classPackageItems.push(classesPurchasedItem);
 
     if (amountPaidItem && amountPaidItem.date && amountPaidItem.date.getTime() === item.date.getTime()) {
-      amountPaidItem.value = amountPaidItem.value + item.amountPaid;
+      amountPaidItem.value = amountPaidItem.value + item.amountPaid / 10;
     } else {
       amountPaidItem = {};
       amountPaidItem.key = 'Revenue';
       amountPaidItem.date = item.date;
-      amountPaidItem.value = item.amountPaid;
+      amountPaidItem.value = item.amountPaid / 10;
     }
 
     if (amountPaidItem) amountPaidItems.push(amountPaidItem);

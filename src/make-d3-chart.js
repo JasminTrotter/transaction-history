@@ -1,12 +1,13 @@
 import * as d3 from 'd3';
 import { constructSeries, series } from './utils/construct-series';
+import * as moment from 'moment';
 
-export default function makeD3Chart(data, earliestTime, latestTime) {
+export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
   const width = 2000;
-  const height = 1000;
+  const height = 2500;
   const margin = { top: 30, right: 50, bottom: 30, left: 30 };
 
-  constructSeries(data);
+  constructSeries(rawData);
 
   const x = d3.scaleTime()
     .range([margin.left, width - margin.right])
@@ -21,7 +22,7 @@ export default function makeD3Chart(data, earliestTime, latestTime) {
 
   const xAxis = g => g
     .attr('transform', `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
+    .call(d3.axisBottom(x).ticks(width / 300).tickSizeOuter(0));
 
   const svg = d3.select('#svg-chart')
     .attr('viewBox', [0, 0, width, height]);
@@ -34,10 +35,14 @@ export default function makeD3Chart(data, earliestTime, latestTime) {
     .data(series)
     .join('g');
 
+  const div = d3.select('body').append('div')
+    .attr('class', 'tooltip')
+    .style('opacity', 0);
+
   serie.append('path')
     .attr('fill', 'none')
     .attr('stroke', d => z(d[0].key))
-    .attr('stroke-width', 1.5)
+    .attr('stroke-width', 3.5)
     .attr('d', d3.line()
       .x(d => x(d.date))
       .y(d => y(d.value)));
@@ -52,13 +57,22 @@ export default function makeD3Chart(data, earliestTime, latestTime) {
     .data(d => d)
     .join('text')
     .text(d => d.value)
+    .on('mouseover', (d) => {
+      div.transition()
+        .duration(200)
+        .style('opacity', .9);
+      div.html(d.key + ': ' + d.value + '<br>' + moment(d.date.getTime()).calendar())
+        .style('left', (d3.event.pageX) + 'px')
+        .style('top', (d3.event.pageY - 28) + 'px');
+    })
+    .on('mouseout', () => {
+      div.transition()
+        .duration(500)
+        .style('opacity', 0);
+    })
     .attr('dy', '0.35em')
     .attr('x', d => x(d.date))
     .attr('y', d => y(d.value))
-    .call(text => text.filter((d, i, data) => i === data.length - 1)
-      .append('tspan')
-      .attr('font-weight', 'bold')
-      .text(d => ` ${d.key}`))
     .clone(true).lower()
     .attr('fill', 'none')
     .attr('stroke', 'white')

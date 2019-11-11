@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Buttons.css';
 
 function Buttons({
   last,
@@ -9,8 +10,8 @@ function Buttons({
 
   return (
     <>
-      {showLast && <button onClick={() => last()}>last 3 months</button>}
-      {showNext && <button onClick={() => next()}>next 3 months</button>}
+      {showLast && <button className='back' onClick={() => last()}>back 1 month</button>}
+      {showNext && <button className='forward' onClick={() => next()}>forward 1 month</button>}
     </>
   );
 }
