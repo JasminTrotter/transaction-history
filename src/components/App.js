@@ -6,12 +6,12 @@ import '../styles/App.css';
 
 function App() {
   const [selectedData, updateSelectedData] = useState(null);
-
+  const [rawData, setRawData] = useState(null);
   const threeMonthsAgo = moment().subtract(3, 'months');
   const today = moment();
-
   const [beginTime, updateBeginTime] = useState(threeMonthsAgo);
   const [endTime, updateEndTime] = useState(today);
+  const [filter, setFilter] = useState(false);
 
   useEffect(() => {
     const url = 'https://student-portal-api.herokuapp.com/api/transaction-history';
@@ -19,31 +19,36 @@ function App() {
     fetch(url)
       .then(res => res.json())
       .then((rawData) => {
-        handleRawData(rawData);
+        formatData(rawData);
+        setRawData(rawData);
       })
       .catch(err => console.log(err));
+  }, []);
 
-    function handleRawData(dataSet) {
-      formatData(dataSet);
-      filterData(dataSet, beginTime, endTime);
-    }
-  }, [beginTime, endTime, selectedData]);
-
+  useEffect(
+    () => {
+      if (rawData) {
+        updateSelectedData(filterData(rawData, beginTime, endTime))
+        setFilter(false);
+      }
+    },
+    [rawData, beginTime, endTime, filter]
+  );
 
   function filterData(dataSet, begin, end) {
-    const filtered = dataSet.filter(d => d.date > begin._d && d.date < end._d);
-
-    updateSelectedData(filtered);
+    return dataSet.filter(d => d.date > begin._d && d.date < end._d);
   }
 
   function handleLastThree() {
     updateBeginTime(beginTime.subtract(3, 'months'));
     updateEndTime(endTime.subtract(3, 'months'));
+    setFilter(true);
   }
 
   function handleNextThree() {
     updateBeginTime(beginTime.add(3, 'months'));
     updateEndTime(endTime.add(3, 'months'));
+    setFilter(true);
   }
 
   return (
