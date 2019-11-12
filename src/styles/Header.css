@@ -1,0 +1,27 @@
+header {
+  height: 110px;
+  line-height: 90px;
+  text-align: center;
+  background-color: #ffffff;
+  border-bottom: #349EDB 2.5px solid;
+}
+
+.logo {
+  max-height: 50px;
+}
+
+.header-flex {
+  display: flex;
+  margin: auto;
+  width: 500px;
+  justify-content: center;
+}
+
+.header-flex * {
+  margin: 10px;
+}
+
+img {
+  background-color: #ffffff;
+  min-height: 95px;;
+}
