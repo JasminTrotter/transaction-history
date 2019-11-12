@@ -1,8 +1,12 @@
-.Chart {
-  max-width: 700px;
+.chart-wrapper {
+  max-width: 740px;
   margin: auto;
   height: auto;
   background-color: #ffffff;
+}
+
+.Chart {
+  max-width: 700px;
 }
 
 .tick text {

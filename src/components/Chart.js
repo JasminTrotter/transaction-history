@@ -29,8 +29,10 @@ function Chart({
 
   return (
     <div style={styles}>
-      <div className='Chart'>
-        <svg id='svg-chart' className='svg-chart'></svg>
+      <div className='chart-wrapper'>
+        <div className='Chart'>
+          <svg id='svg-chart' className='svg-chart'></svg>
+        </div>
       </div>
     </div>
   );
