@@ -3,6 +3,10 @@ import * as d3 from 'd3';
 import '../styles/Chart.css';
 import makeD3Chart from '../make-d3-chart';
 
+const styles = {
+  borderBottom: '2.5px solid #349EDB'
+}
+
 function Chart({
   rawDataSeries,
   dataSet,
@@ -24,9 +28,11 @@ function Chart({
   });
 
   return (
-    <>
-      <svg id='svg-chart'></svg>
-    </>
+    <div style={styles}>
+      <div className='Chart'>
+        <svg id='svg-chart' className='svg-chart'></svg>
+      </div>
+    </div>
   );
 }
 

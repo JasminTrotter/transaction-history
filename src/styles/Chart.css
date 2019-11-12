@@ -1,7 +1,42 @@
+.Chart {
+  max-width: 700px;
+  margin: auto;
+  height: auto;
+  background-color: #ffffff;
+}
+
 .tick text {
   font-size: 25px;
 }
 
 .tick {
   height: 40px;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  height: auto;
+  padding: 2px;
+  font: 12px;
+  background: #B7DBF5;
+  border: 2.5px solid #349EDB;
+  border-radius: 8px;
+  pointer-events: none;
+  padding: 8px;
+}
+
+.svg-chart {
+  padding: 20px;
+}
+
+.rule {
+  height: 90%;
+  position: absolute;
+  border-right: 1px dotted #000;
+  text-align: right;
+}
+span {
+  margin-right: 0.5em;
 }

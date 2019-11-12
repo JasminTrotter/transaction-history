@@ -1,13 +1,17 @@
 import * as d3 from 'd3';
-import { constructSeries, series } from './utils/construct-series';
 import * as moment from 'moment';
+import {
+  constructSeries,
+  getDisplayValue,
+  getDomainMax,
+  getTooltipText
+} from './utils';
 
 export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
   const width = 2000;
-  const height = 2500;
-  const margin = { top: 30, right: 50, bottom: 30, left: 30 };
-
-  constructSeries(rawData);
+  const height = 2000;
+  const margin = { top: 30, right: 30, bottom: 30, left: 100 };
+  const series = constructSeries(rawData);
 
   const x = d3.scaleTime()
     .range([margin.left, width - margin.right])
@@ -15,7 +19,7 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
     .nice()
 
   const y = d3.scaleLinear()
-    .domain([0, d3.max(series, s => d3.max(s, d => d.value))])
+    .domain([0, getDomainMax(series)])
     .range([height - margin.bottom, margin.top]);
 
   const z = d3.scaleOrdinal(['classPackage', 'amountPaid'], d3.schemeCategory10);
@@ -42,26 +46,26 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
   serie.append('path')
     .attr('fill', 'none')
     .attr('stroke', d => z(d[0].key))
-    .attr('stroke-width', 3.5)
+    .attr('stroke-width', 1.5)
     .attr('d', d3.line()
       .x(d => x(d.date))
       .y(d => y(d.value)));
 
   serie.append('g')
     .attr('font-family', 'sans-serif')
-    .attr('font-size', 10)
+    .attr('font-size', 30)
     .attr('stroke-linecap', 'round')
     .attr('stroke-linejoin', 'round')
     .attr('text-anchor', 'middle')
     .selectAll('text')
     .data(d => d)
     .join('text')
-    .text(d => d.value)
+    .text(d => getDisplayValue(d))
     .on('mouseover', (d) => {
       div.transition()
         .duration(200)
         .style('opacity', .9);
-      div.html(d.key + ': ' + d.value + '<br>' + moment(d.date.getTime()).calendar())
+      div.html(getTooltipText(d))
         .style('left', (d3.event.pageX) + 'px')
         .style('top', (d3.event.pageY - 28) + 'px');
     })
@@ -77,6 +81,17 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
     .attr('fill', 'none')
     .attr('stroke', 'white')
     .attr('stroke-width', 6);
+
+  svg.on('mousemove', () => {
+    var xpos = d3.event.pageX;
+    var rule = d3.select('g').selectAll('div.rule')
+      .data([0]);
+    rule.enter().append('div')
+      .attr('class', 'rule')
+      .append('span');
+    rule.style('left', xpos + 'px');
+    rule.select('span').text(xpos);
+  });
 
   return svg.node();
 }

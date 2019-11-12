@@ -9,10 +9,10 @@ function Buttons({
 }) {
 
   return (
-    <>
-      {showLast && <button className='back' onClick={() => last()}>back 1 month</button>}
-      {showNext && <button className='forward' onClick={() => next()}>forward 1 month</button>}
-    </>
+    <div className='Buttons'>
+      {showLast && <a className='back' onClick={() => last()}>{'< last month'}</a>}
+      {showNext && <a className='forward' onClick={() => next()}>{'next month >'}</a>}
+    </div>
   );
 }
 

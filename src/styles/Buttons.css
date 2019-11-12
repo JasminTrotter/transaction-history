@@ -1,8 +1,25 @@
-button {
-  position: absolute;
-  top: 500px;
+.Buttons {
+  background: transparent;
+  position: relative;
+  top: -8px;
+  max-width: 300px;
+  margin: auto;
+  height: 0px;
+  justify-content: center;
+}
+
+a {
+  position: relative;
+  padding: 5px;
+  max-height: 50px;
+  cursor: pointer;
+  background-color: #2F9BDA;
+  border-radius: 8px;
+  color: #ffffff;
 }
 
 .forward {
-  right: 0px;
+  float: right;
 }
+
+

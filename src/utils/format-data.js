@@ -1,4 +1,4 @@
-export default function formatData(dataSet) {
+export function formatData(dataSet) {
   dataSet.forEach(o => {
     o['classPackage'] = parseInt(o['package'].replace(/[classes ]/g, ''));
     o['amountPaid'] = parseInt(o['amountPaid']);

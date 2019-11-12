@@ -1,13 +1,9 @@
-
-export const series = [];
-
 export function constructSeries(data) {
   let classesPurchasedItem;
   let amountPaidItem;
-  let packagesPurchasedItem;
+  const series = [];
   const classPackageItems = [];
   const amountPaidItems = [];
-  const packagesPurchasedItems = [];
 
   data.forEach((item) => {
 
@@ -32,20 +28,10 @@ export function constructSeries(data) {
     }
 
     if (amountPaidItem) amountPaidItems.push(amountPaidItem);
-
-    if (packagesPurchasedItem && packagesPurchasedItem.date && packagesPurchasedItem.date.getTime() === item.date.getTime()) {
-      packagesPurchasedItem.value = packagesPurchasedItem.value + 1;
-    } else {
-      packagesPurchasedItem = {};
-      packagesPurchasedItem.key = 'Packages Purchased';
-      packagesPurchasedItem.date = item.date;
-      packagesPurchasedItem.value = 1;
-    }
-
-    if (packagesPurchasedItem) packagesPurchasedItems.push(packagesPurchasedItem);
   });
 
   series[0] = classPackageItems;
   series[1] = amountPaidItems;
-  series[2] = packagesPurchasedItems;
+
+  return series;
 }

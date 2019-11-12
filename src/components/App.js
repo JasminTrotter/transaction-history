@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Chart from './Chart';
 import * as moment from 'moment';
-import formatData from '../utils/format-data';
+import { formatData } from '../utils';
 import Buttons from './Buttons';
+import Header from './Header';
 import '../styles/App.css';
 
 function App() {
@@ -77,7 +78,13 @@ function App() {
 
   return (
     <div className='App'>
-
+      <Header />
+      <Chart
+        dataSet={selectedData}
+        rawData={rawData}
+        begin={beginTime}
+        end={endTime}
+      />
       <Buttons
         next={handleNextThree}
         last={handleLastThree}
@@ -86,13 +93,6 @@ function App() {
         rawData={rawData}
         showLast={showLast}
         showNext={showNext}
-      />
-
-      <Chart
-        dataSet={selectedData}
-        rawData={rawData}
-        begin={beginTime}
-        end={endTime}
       />
     </div>
   );
