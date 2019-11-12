@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import * as moment from 'moment';
 import {
   constructSeries,
   getDisplayValue,
@@ -8,8 +7,8 @@ import {
 } from './utils';
 
 export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
-  const width = 2000;
-  const height = 2000;
+  const width = 2500;
+  const height = 1000;
   const margin = { top: 30, right: 30, bottom: 30, left: 100 };
   const series = constructSeries(rawData);
 

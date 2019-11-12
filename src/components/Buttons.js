@@ -10,8 +10,8 @@ function Buttons({
 
   return (
     <div className='Buttons'>
-      {showLast && <a className='back' onClick={() => last()}>{'< last month'}</a>}
-      {showNext && <a className='forward' onClick={() => next()}>{'next month >'}</a>}
+      <button className='back' disabled={!showLast} onClick={() => last()}>{'< last month'}</button>
+      <button className='forward' disabled={!showNext} onClick={() => next()}>{'next month >'}</button>
     </div>
   );
 }
