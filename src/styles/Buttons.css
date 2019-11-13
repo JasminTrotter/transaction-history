@@ -5,7 +5,7 @@
   margin: auto;
   height: 0px;
   justify-content: center;
-  width: 85%;
+  width: 95%;
   z-index: 3;
 }
 
@@ -25,5 +25,3 @@ a {
   top: 2px;
   position: relative;
 }
-
-

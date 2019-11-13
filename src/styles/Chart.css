@@ -1,13 +1,8 @@
-.viewport-flexible-wrapper {
-  border-bottom: 2.5px solid #349EDB;
-}
-
 .svg-wrapper {
-  width: 65%;
+  width: 75%;
   position: relative;
   margin: auto;
   background-color: #ffffff;
-  z-index: 1;
 }
 
 .Chart {

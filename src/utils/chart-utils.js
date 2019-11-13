@@ -23,3 +23,17 @@ export function getTooltipText(d) {
 
   return getDisplayValue(d) + ' ' + keyLabel + '<br>' + ' on ' + timeStamp;
 }
+
+export function getDisplayColor(d) {
+  let color = 'grey';
+
+  d.forEach(o => {
+    if (o.key === 'Revenue') {
+      color = '#CC8E83';
+    } else if (o.key === 'Classes Purchased') {
+      color = '#349EDB';
+    }
+  })
+
+  return color;
+}

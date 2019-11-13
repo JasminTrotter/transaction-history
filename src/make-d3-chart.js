@@ -3,7 +3,8 @@ import {
   constructSeries,
   getDisplayValue,
   getDomainMax,
-  getTooltipText
+  getTooltipText,
+  getDisplayColor
 } from './utils';
 
 export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
@@ -25,7 +26,7 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
 
   const xAxis = g => g
     .attr('transform', `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x).ticks(width / 300).tickSizeOuter(0));
+    .call(d3.axisBottom(x).ticks(4));
 
   const svg = d3.select('#svg-chart')
     .attr('viewBox', [0, 0, width, height]);
@@ -44,8 +45,8 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
 
   serie.append('path')
     .attr('fill', 'none')
-    .attr('stroke', d => z(d[0].key))
-    .attr('stroke-width', 1.5)
+    .attr('stroke', d => getDisplayColor(d))
+    .attr('stroke-width', 3)
     .attr('d', d3.line()
       .x(d => x(d.date))
       .y(d => y(d.value)));
@@ -80,17 +81,6 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
     .attr('fill', 'none')
     .attr('stroke', 'white')
     .attr('stroke-width', 6);
-
-  svg.on('mousemove', () => {
-    var xpos = d3.event.pageX;
-    var rule = d3.select('g').selectAll('div.rule')
-      .data([0]);
-    rule.enter().append('div')
-      .attr('class', 'rule')
-      .append('span');
-    rule.style('left', xpos + 'px');
-    rule.select('span').text(xpos);
-  });
 
   return svg.node();
 }

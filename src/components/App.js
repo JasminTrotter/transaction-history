@@ -94,6 +94,7 @@ function App() {
         showLast={showLast}
         showNext={showNext}
       />
+      <div style={{ borderTop: '3px solid #349EDB' }}></div>
     </div>
   );
 }

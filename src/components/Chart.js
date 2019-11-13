@@ -24,11 +24,9 @@ function Chart({
   });
 
   return (
-    <div className='viewport-flexible-wrapper'>
-      <div className='svg-wrapper'>
-        <div className='Chart'>
-          <svg id='svg-chart' className='svg-chart'></svg>
-        </div>
+    <div className='svg-wrapper'>
+      <div className='Chart'>
+        <svg id='svg-chart' className='svg-chart'></svg>
       </div>
     </div>
   );
