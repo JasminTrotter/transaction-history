@@ -24,3 +24,25 @@ img {
   background-color: #ffffff;
   min-height: 95px;;
 }
+
+@media only screen and (max-width: 950px) {
+  .Header {
+    height: 50px;
+  }
+  h1 {
+    font-size: x-large;
+  }
+  img {
+    min-height: 65px;
+  }
+  header {
+    line-height: 60px;
+    height: 80px;
+  }
+}
+
+@media only screen and (max-width: 465px) {
+  h1 {
+    font-size: large;
+  }
+}

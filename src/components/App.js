@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { formatData } from '../utils';
 import Buttons from './Buttons';
 import Header from './Header';
+import Section from './Section';
 import '../styles/App.css';
 
 function App() {
@@ -94,7 +95,7 @@ function App() {
         showLast={showLast}
         showNext={showNext}
       />
-      <div style={{ borderTop: '3px solid #349EDB' }}></div>
+      <Section />
     </div>
   );
 }

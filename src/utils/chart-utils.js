@@ -21,7 +21,7 @@ export function getTooltipText(d) {
     keyLabel = 'Class Purchased';
   }
 
-  return getDisplayValue(d) + ' ' + keyLabel + '<br>' + ' on ' + timeStamp;
+  return getDisplayValue(d) + ' ' + keyLabel + '<br> on ' + timeStamp;
 }
 
 export function getDisplayColor(d) {

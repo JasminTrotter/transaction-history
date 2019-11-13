@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/Buttons.css';
+import '../styles/App.css';
 
 function Buttons({
   last,

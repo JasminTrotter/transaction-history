@@ -1,0 +1,42 @@
+.Section {
+  background-color: #ffffff;
+}
+
+hr {
+  width: 200px;
+  height: 2px;
+  border: none;
+  margin-left: 10px;
+  top: 5px;
+  position: relative;
+  display: table;
+}
+
+.legend-container {
+  top: 50px;
+  position: relative;
+}
+
+.legend {
+  width: 70vw;
+  margin: auto;
+}
+
+.legend * {
+  display: inline-block;
+}
+
+p {
+  font-size: small;
+  width: 150px;
+}
+
+@media only screen and (max-width: 595px) {
+  hr {
+    width: 10vw;
+  }
+  p {
+    font-size: x-small;
+    width: 100px;
+  }
+}

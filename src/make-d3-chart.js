@@ -8,9 +8,9 @@ import {
 } from './utils';
 
 export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
-  const width = 2500;
-  const height = 1000;
-  const margin = { top: 30, right: 30, bottom: 30, left: 100 };
+  const width = 5000;
+  const height = 2000;
+  const margin = { top: 30, right: 100, bottom: 80, left: 100 };
   const series = constructSeries(rawData);
 
   const x = d3.scaleTime()
@@ -21,8 +21,6 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
   const y = d3.scaleLinear()
     .domain([0, getDomainMax(series)])
     .range([height - margin.bottom, margin.top]);
-
-  const z = d3.scaleOrdinal(['classPackage', 'amountPaid'], d3.schemeCategory10);
 
   const xAxis = g => g
     .attr('transform', `translate(0,${height - margin.bottom})`)
@@ -46,14 +44,14 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
   serie.append('path')
     .attr('fill', 'none')
     .attr('stroke', d => getDisplayColor(d))
-    .attr('stroke-width', 3)
+    .attr('stroke-width', 5)
     .attr('d', d3.line()
       .x(d => x(d.date))
       .y(d => y(d.value)));
 
   serie.append('g')
     .attr('font-family', 'sans-serif')
-    .attr('font-size', 30)
+    .attr('font-size', 75)
     .attr('stroke-linecap', 'round')
     .attr('stroke-linejoin', 'round')
     .attr('text-anchor', 'middle')

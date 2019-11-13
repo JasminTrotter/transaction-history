@@ -11,7 +11,7 @@
 }
 
 .tick text {
-  font-size: 25px;
+  font-size: 55px;
 }
 
 .tick {
@@ -46,13 +46,3 @@
 span {
   margin-right: 0.5em;
 }
-
-/* @media only screen and (max-width: 1440px) {
-  .svg-wrapper {
-    max-width: 540px;
-  }
-
-  .Chart {
-    max-width: 500px;
-  }
-} */
