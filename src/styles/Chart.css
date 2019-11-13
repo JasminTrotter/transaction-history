@@ -1,23 +1,24 @@
-.chart-wrapper {
-  max-width: 740px;
+.svg-wrapper {
+  width: 75%;
+  position: relative;
   margin: auto;
-  height: auto;
   background-color: #ffffff;
 }
 
 .Chart {
-  max-width: 700px;
+  width: calc(100% - 35px);
+  position: relative;
 }
 
 .tick text {
-  font-size: 25px;
+  font-size: 55px;
 }
 
 .tick {
   height: 40px;
 }
 
-div.tooltip {
+.tooltip {
   position: absolute;
   text-align: center;
   width: auto;
@@ -29,6 +30,7 @@ div.tooltip {
   border-radius: 8px;
   pointer-events: none;
   padding: 8px;
+  z-index: 2;
 }
 
 .svg-chart {
