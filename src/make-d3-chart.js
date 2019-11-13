@@ -52,6 +52,7 @@ export default function makeD3Chart(data, earliestTime, latestTime, rawData) {
   serie.append('g')
     .attr('font-family', 'sans-serif')
     .attr('font-size', 75)
+    .attr('cursor', 'pointer')
     .attr('stroke-linecap', 'round')
     .attr('stroke-linejoin', 'round')
     .attr('text-anchor', 'middle')
