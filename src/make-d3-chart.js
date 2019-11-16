@@ -7,11 +7,11 @@ import {
   getDisplayColor
 } from './utils';
 
-export default function makeD3Chart(earliestTime, latestTime, dataSet) {
+export default function makeD3Chart(earliestTime, latestTime, wholeData) {
   const width = 5000;
   const height = 2000;
   const margin = { top: 30, right: 100, bottom: 80, left: 100 };
-  const series = constructSeries(dataSet);
+  const series = constructSeries(wholeData);
 
   const x = d3.scaleTime()
     .range([margin.left, width - margin.right])
@@ -80,4 +80,5 @@ export default function makeD3Chart(earliestTime, latestTime, dataSet) {
     .attr('fill', 'none')
     .attr('stroke', 'white')
     .attr('stroke-width', 6);
+
 }

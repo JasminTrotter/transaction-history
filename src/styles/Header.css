@@ -25,6 +25,11 @@ img {
   min-height: 95px;;
 }
 
+a {
+  top: -10px;
+  position: relative;
+}
+
 @media only screen and (max-width: 950px) {
   .Header {
     height: 50px;

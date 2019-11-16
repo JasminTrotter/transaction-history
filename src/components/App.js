@@ -4,16 +4,20 @@ import * as moment from 'moment';
 import { formatData } from '../utils';
 import Buttons from './Buttons';
 import Header from './Header';
-import Section from './Section';
+import Legend from './Legend';
 import '../styles/App.css';
 
 function App() {
   const [selectedData, updateSelectedData] = useState(null);
-  const [rawData, setRawData] = useState(null);
+  const [wholeDataSet, setWholeDataSet] = useState(null);
+
   const oneMonthAgo = moment().subtract(1, 'months');
   const today = moment();
+
   const [beginTime, updateBeginTime] = useState(oneMonthAgo);
   const [endTime, updateEndTime] = useState(today);
+
+  const [filter, setFilter] = useState(false);
   const [showLast, setShowLast] = useState(true);
   const [showNext, setShowNext] = useState(false);
 
@@ -24,37 +28,39 @@ function App() {
       .then(res => res.json())
       .then((rawData) => {
         formatData(rawData);
-        setRawData(rawData);
+        setWholeDataSet(rawData);
       })
       .catch(err => console.log(err));
   }, []);
 
   useEffect(
     () => {
-      if (rawData) {
-        updateSelectedData(filterData(rawData, beginTime, endTime))
+      if (wholeDataSet) {
+        updateSelectedData(filterData(wholeDataSet, beginTime, endTime))
+        setFilter(false);
 
-        const firstRawData = rawData[0].date.getTime();
-        const lastRawData = rawData[rawData.length - 1].date.getTime();
+        const firstwholeDataSet = wholeDataSet[0].date.getTime();
+        const lastwholeDataSet = wholeDataSet[wholeDataSet.length - 1].date.getTime();
 
-        if (beginTime._d < firstRawData) {
+        if (beginTime._d < firstwholeDataSet) {
           setShowLast(false);
         }
 
-        if (beginTime._d > firstRawData && endTime._d < lastRawData) {
+        if (beginTime._d > firstwholeDataSet && endTime._d < lastwholeDataSet) {
           setShowNext(true);
           setShowLast(true);
         }
 
-        if (endTime._d > lastRawData) {
+        if (endTime._d > lastwholeDataSet) {
           setShowNext(false);
         }
       }
     },
     [
-      rawData,
+      wholeDataSet,
       beginTime,
-      endTime
+      endTime,
+      filter
     ]
   );
 
@@ -63,13 +69,15 @@ function App() {
   }
 
   function handleLastMonth() {
-    updateBeginTime(beginTime.subtract(1, 'months').clone());
-    updateEndTime(endTime.subtract(1, 'months').clone());
+    updateBeginTime(beginTime.subtract(1, 'months'));
+    updateEndTime(endTime.subtract(1, 'months'));
+    setFilter(true);
   }
 
   function handleNextMonth() {
-    updateBeginTime(beginTime.add(1, 'months').clone());
-    updateEndTime(endTime.add(1, 'months').clone());
+    updateBeginTime(beginTime.add(1, 'months'));
+    updateEndTime(endTime.add(1, 'months'));
+    setFilter(true);
   }
 
   return (
@@ -77,20 +85,20 @@ function App() {
       <Header />
       <Chart
         dataSet={selectedData}
-        rawData={rawData}
+        wholeDataSet={wholeDataSet}
         begin={beginTime}
         end={endTime}
       />
       <Buttons
-        next={handleNextMonth}
-        last={handleLastMonth}
         begin={beginTime}
         end={endTime}
-        rawData={rawData}
+        last={handleLastMonth}
+        next={handleNextMonth}
         showLast={showLast}
         showNext={showNext}
+        wholeDataSet={wholeDataSet}
       />
-      <Section />
+      <Legend />
     </div>
   );
 }

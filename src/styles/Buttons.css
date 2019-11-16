@@ -1,6 +1,7 @@
 .Buttons {
   background: transparent;
   position: relative;
+  top: -8px;
   margin: auto;
   height: 0px;
   justify-content: center;
@@ -24,9 +25,21 @@ button {
   position: relative;
 }
 
+button:disabled {
+  background-color: #375975;
+}
+
 @media only screen and (max-width: 950px) {
     .Buttons {
     top: 0px;
     width: 80%;
+  }
+}
+
+@media only screen and (min-width: 1441px) {
+  button {
+    max-height: 60px;
+    width: 120px;
+    font-size: medium;
   }
 }

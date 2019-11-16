@@ -7,7 +7,7 @@ function Chart({
   dataSet,
   begin,
   end,
-  rawData
+  wholeDataSet
 }) {
 
   useEffect(() => {
@@ -16,7 +16,7 @@ function Chart({
         .selectAll('g')
         .remove();
 
-      makeD3Chart(begin._d, end._d, rawData);
+      makeD3Chart(begin._d, end._d, wholeDataSet);
     }
 
   });
