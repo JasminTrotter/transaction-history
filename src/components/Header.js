@@ -7,7 +7,7 @@ function Header() {
   return (
     <header>
       <div className='header-flex'>
-        <img src={logo} className='logo' alt='Ballet Body by Jasmin logo'></img>
+        <a href='https://student-portal-balletbody.herokuapp.com' target='_blank' rel='noopener noreferrer'><img src={logo} className='logo' alt='Ballet Body by Jasmin logo'></img></a>
         <h1>Transaction History</h1>
       </div>
     </header>

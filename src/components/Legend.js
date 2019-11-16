@@ -1,10 +1,10 @@
 import React from 'react';
-import '../styles/Section.css';
+import '../styles/Legend.css';
 
-function Section() {
+function Legend() {
 
   return (
-    <div className='Section' style={{ borderTop: '3px solid #349EDB' }}>
+    <div className='Legend' style={{ borderTop: '3px solid #349EDB' }}>
       <section>
         <div className='legend-container'>
           <div className='legend'>
@@ -20,4 +20,4 @@ function Section() {
   );
 }
 
-export default Section;
+export default Legend;
