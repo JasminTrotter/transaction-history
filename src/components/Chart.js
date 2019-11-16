@@ -4,12 +4,10 @@ import '../styles/Chart.css';
 import makeD3Chart from '../make-d3-chart';
 
 function Chart({
-  rawDataSeries,
   dataSet,
   begin,
   end,
-  rawData,
-  selectedDataSeries
+  rawData
 }) {
 
   useEffect(() => {
@@ -18,7 +16,7 @@ function Chart({
         .selectAll('g')
         .remove();
 
-      makeD3Chart(dataSet, begin._d, end._d, rawData, rawDataSeries, selectedDataSeries);
+      makeD3Chart(begin._d, end._d, rawData);
     }
 
   });

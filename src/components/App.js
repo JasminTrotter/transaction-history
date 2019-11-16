@@ -14,7 +14,6 @@ function App() {
   const today = moment();
   const [beginTime, updateBeginTime] = useState(oneMonthAgo);
   const [endTime, updateEndTime] = useState(today);
-  const [filter, setFilter] = useState(false);
   const [showLast, setShowLast] = useState(true);
   const [showNext, setShowNext] = useState(false);
 
@@ -34,7 +33,6 @@ function App() {
     () => {
       if (rawData) {
         updateSelectedData(filterData(rawData, beginTime, endTime))
-        setFilter(false);
 
         const firstRawData = rawData[0].date.getTime();
         const lastRawData = rawData[rawData.length - 1].date.getTime();
@@ -56,8 +54,7 @@ function App() {
     [
       rawData,
       beginTime,
-      endTime,
-      filter
+      endTime
     ]
   );
 
@@ -65,16 +62,14 @@ function App() {
     return dataSet.filter(d => d.date > begin._d && d.date < end._d);
   }
 
-  function handleLastThree() {
-    updateBeginTime(beginTime.subtract(1, 'months'));
-    updateEndTime(endTime.subtract(1, 'months'));
-    setFilter(true);
+  function handleLastMonth() {
+    updateBeginTime(beginTime.subtract(1, 'months').clone());
+    updateEndTime(endTime.subtract(1, 'months').clone());
   }
 
-  function handleNextThree() {
-    updateBeginTime(beginTime.add(1, 'months'));
-    updateEndTime(endTime.add(1, 'months'));
-    setFilter(true);
+  function handleNextMonth() {
+    updateBeginTime(beginTime.add(1, 'months').clone());
+    updateEndTime(endTime.add(1, 'months').clone());
   }
 
   return (
@@ -87,8 +82,8 @@ function App() {
         end={endTime}
       />
       <Buttons
-        next={handleNextThree}
-        last={handleLastThree}
+        next={handleNextMonth}
+        last={handleLastMonth}
         begin={beginTime}
         end={endTime}
         rawData={rawData}
